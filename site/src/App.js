@@ -23,7 +23,7 @@ function Home(){
     return(
         <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><h3 style={{fontFamily: "Lobster"}}>Clairvoyance</h3></a>
+  <a class="navbar-brand" href="#"><h2 style={{fontFamily: "Lobster", fontSize: '4rem'}}>Clairvoyance</h2></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -157,9 +157,22 @@ function About(){
 function Signup(){
     return(
         <div>
-            <form method = 'POST'>
-                <input type = 'email' value = "email"></input>
-            </form>
+            <h2 class="text-center">
+                Sign Up
+            </h2>
+            <br />
+            <div class = "text-center">
+                <form method = 'POST'>
+                    <span class = "text-dark" style = {{padding: '14px'}}>Email:</span>
+                    <input type = 'email'></input>
+                    <br />
+                    <span class = "text-dark">Password:</span>
+                    <input type = 'password'></input>
+                    <br />
+                    <br />
+                    <input type = 'button' value = "submit"></input>
+                </form>
+            </div>
         </div>
     )
 }
