@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
 
 export default function App(){
     return(
@@ -11,6 +11,9 @@ export default function App(){
                 <Route path = '/about'>
                     <About />
                 </Route>
+                <Route path = '/signin'>
+                    <Signin />
+                </Route>
                 <Route path = '/signup'>
                     <Signup />
                 </Route>
@@ -20,6 +23,14 @@ export default function App(){
 }
 
 function Home(){
+
+    const history = useHistory();
+
+    const routeChange = () =>{
+        let path = '/signup';
+        history.push(path);
+    }
+
     return(
         <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,9 +46,9 @@ function Home(){
       </li>
     </ul>
     <a class="p-2 text-dark" href="/about">Subscribe</a>
-    <a class="p-2 text-dark" href="/signup">Sign up</a>
+    <a class="p-2 text-dark" href="/signin">Sign In</a>
     <a class="p-2 text-dark">Write</a>
-    <a style={{backgroundColor: "#59b38c", border: "none"}}  class="btn btn-primary btn-md" href="#">Get Started</a>
+    <a style={{backgroundColor: "#59b38c", border: "none"}}  class="btn btn-primary btn-md" href="/signup">Get Started</a>
   </div>
 </nav>
 
@@ -122,13 +133,13 @@ function Home(){
 </div>   
 
 <div class="text-center">
-    <button style={{backgroundColor: "#59b38c", border: "none"}} class="btn btn-primary btn-lg">
+    <button style={{backgroundColor: "#59b38c", border: "none"}} class="btn btn-primary btn-lg" onClick={routeChange}>
         Get Started
     </button>
     <br></br>
     <br></br>
     <span>
-        Already have an account. <a href="#" style={{color:"#59b38c"}}>Sign in</a>.
+        Already have an account. <a href="/signin" style={{color:"#59b38c"}}>Sign in</a>.
     </span>
 </div>
 <br/>
@@ -151,6 +162,29 @@ function About(){
         <h2>
             About
         </h2>
+    )
+}
+
+function Signin(){
+    return(
+        <div>
+            <h2 class="text-center">
+                Sign In
+            </h2>
+            <br />
+            <div class = "text-center">
+                <form method = 'POST'>
+                    <span class = "text-dark" style = {{padding: '14px'}}>Email:</span>
+                    <input type = 'email'></input>
+                    <br />
+                    <span class = "text-dark">Password:</span>
+                    <input type = 'password'></input>
+                    <br />
+                    <br />
+                    <input type = 'button' value = "submit"></input>
+                </form>
+            </div>
+        </div>
     )
 }
 
