@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 export default function App(){
     return(
@@ -166,6 +167,22 @@ function About(){
 }
 
 function Signin(){
+
+    let val = React.createRef();
+
+    const sub = () => {
+
+        axios.post('http://127.0.0.1:4000/signup',{
+            email: val.current.value
+        }).then((res) => {
+            console.log(res);
+        }).catch((error) => {
+            console.log(error);
+        });
+        
+        console.log('submited');
+    }
+
     return(
         <div>
             <h2 class="text-center">
@@ -175,14 +192,14 @@ function Signin(){
             <div class = "text-center">
                 <form method = 'POST'>
                     <span class = "text-dark" style = {{padding: '14px'}}>Email:</span>
-                    <input type = 'email'></input>
+                    <input type = 'email' ref = {val}></input>
                     <br />
                     <span class = "text-dark">Password:</span>
                     <input type = 'password'></input>
                     <br />
                     <br />
-                    <input type = 'button' value = "submit"></input>
                 </form>
+                <button onClick = {sub}>Submit</button>
             </div>
         </div>
     )
@@ -198,7 +215,7 @@ function Signup(){
             <div class = "text-center">
                 <form method = 'POST'>
                     <span class = "text-dark" style = {{padding: '14px'}}>Email:</span>
-                    <input type = 'email'></input>
+                    <input type = 'email' name = 'email'></input>
                     <br />
                     <span class = "text-dark">Password:</span>
                     <input type = 'password'></input>
