@@ -60,78 +60,21 @@ function Home(){
 <br />
 <h4>Select what you're into. We'll help you find great things to read.</h4>
 <br />
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Future</span>    
-</button>
 
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Technology</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Science</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Physics</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Health</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Mathematics</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Computing</span> 
-</button>
+<Tiles name = 'Future' />
+<Tiles name = 'Technology' />
+<Tiles name = 'Physics' />
+<Tiles name = 'Health' />
+<Tiles name = 'Mathematics' />
+<Tiles name = 'Computing' />
+
 <br />
 
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Culture</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Neuroscience</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>LGBTQ</span>    
-</button>
-<button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
-    <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
-        #
-    </button>
-    <span style={{fontSize: "20px", margin: "5px"}}>Cryptocurrency</span>    
-</button>
+<Tiles name = 'Culture' />
+<Tiles name = 'Neuroscience' />
+<Tiles name = 'LGBTQ' />
 
-
-</div>   
+</div>  
 
 <div class="text-center">
     <button style={{backgroundColor: "#59b38c", border: "none"}} class="btn btn-primary btn-lg" onClick={routeChange}>
@@ -156,6 +99,18 @@ function Home(){
 
 </>
     )
+}
+
+function Tiles(props){
+    return (
+        <button style={{border: "none", borderRadius: "20px",  padding: "3px 5px", margin: "5px"}}>
+        <button style={{border: "none", borderRadius: "50%", fontSize: "17px", padding:"2px 10px", color: "white", alignContent:"left", margin: "1px", backgroundColor: "black"}}>
+            #
+        </button>
+        <span style={{fontSize: "20px", margin: "5px"}}>{props.name}</span>    
+        </button>
+    )
+
 }
 
 function About(){

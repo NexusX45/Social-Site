@@ -8,7 +8,9 @@ app.use(express.json());
 app.post('/signup', (req, res) => {
 
     console.log(req.body.email);
+    res.send(req.body.email);
 
 })
 
-app.listen(4000);
+app.listen(4000, () => console.log("Listening on port 4000"));
+
