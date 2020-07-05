@@ -1,26 +1,58 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
 
 export default function App(){
     return(
         <Router>
             <Switch>
                 <Route exact path = '/'>
+                    <Navbar />
                     <Home />
                 </Route>
                 <Route path = '/about'>
+                    <Navbar />
                     <About />
                 </Route>
                 <Route path = '/signin'>
+                    <Navbar />
                     <Signin />
                 </Route>
                 <Route path = '/signup'>
+                    <Navbar />
                     <Signup />
                 </Route>
             </Switch>
         </Router>
     )
+}
+
+function Navbar(){
+
+    return (
+
+        <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
+      <a class="navbar-brand" href="/"><h2 style={{fontFamily: "Lobster", fontSize: '4rem'}}>Clarity</h2></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            
+          </li>
+        </ul>
+        <a class="p-2 text-dark" href="/about">Subscribe</a>
+        <a class="p-2 text-dark" href="/signin">Sign In</a>
+        <a class="p-2 text-dark">Write</a>
+        <a style={{backgroundColor: "#55b0c9", border: "none"}}  class="btn btn-primary btn-md" href="/signup">Get Started</a>
+      </div>
+    </nav>
+
+    )
+
 }
 
 function Home(){
@@ -34,24 +66,6 @@ function Home(){
 
     return(
         <>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><h2 style={{fontFamily: "Lobster", fontSize: '4rem'}}>Clairvoyance</h2></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        
-      </li>
-    </ul>
-    <a class="p-2 text-dark" href="/about">Subscribe</a>
-    <a class="p-2 text-dark" href="/signin">Sign In</a>
-    <a class="p-2 text-dark">Write</a>
-    <a style={{backgroundColor: "#59b38c", border: "none"}}  class="btn btn-primary btn-md" href="/signup">Get Started</a>
-  </div>
-</nav>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 <h2 class="display-4" style={{fontFamily: "Abril Fatface"}}>
@@ -77,13 +91,13 @@ function Home(){
 </div>  
 
 <div class="text-center">
-    <button style={{backgroundColor: "#59b38c", border: "none"}} class="btn btn-primary btn-lg" onClick={routeChange}>
+    <button style={{backgroundColor: "#55b0c9", border: "none"}} class="btn btn-primary btn-lg" onClick={routeChange}>
         Get Started
     </button>
     <br></br>
     <br></br>
     <span>
-        Already have an account. <a href="/signin" style={{color:"#59b38c"}}>Sign in</a>.
+        Already have an account. <a href="/signin" style={{color:"#55b0c9"}}>Sign in</a>.
     </span>
 </div>
 <br/>
@@ -139,8 +153,10 @@ function Signin(){
     }
 
     return(
+        
         <div>
-            <h2 class="text-center">
+            <br />
+            <h2 class="display-4 text-center">
                 Sign In
             </h2>
             <br />
@@ -163,7 +179,8 @@ function Signin(){
 function Signup(){
     return(
         <div>
-            <h2 class="text-center">
+            <br />
+            <h2 class="display-4 text-center">
                 Sign Up
             </h2>
             <br />
