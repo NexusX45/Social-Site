@@ -8,19 +8,15 @@ export default function App(){
         <Router>
             <Switch>
                 <Route exact path = '/'>
-                    <Navbar />
                     <Home />
                 </Route>
                 <Route path = '/about'>
-                    <Navbar />
                     <About />
                 </Route>
                 <Route path = '/signin'>
-                    <Navbar />
                     <Signin />
                 </Route>
                 <Route path = '/signup'>
-                    <Navbar />
                     <Signup />
                 </Route>
             </Switch>
@@ -28,32 +24,6 @@ export default function App(){
     )
 }
 
-function Navbar(){
-
-    return (
-
-        <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
-      <a class="navbar-brand" href="/"><h2 style={{fontFamily: "Lobster", fontSize: '4rem'}}>Clarity</h2></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            
-          </li>
-        </ul>
-        <a class="p-2 text-dark" href="/about">Subscribe</a>
-        <a class="p-2 text-dark" href="/signin">Sign In</a>
-        <a class="p-2 text-dark">Write</a>
-        <a style={{backgroundColor: "#55b0c9", border: "none"}}  class="btn btn-primary btn-md" href="/signup">Get Started</a>
-      </div>
-    </nav>
-
-    )
-
-}
 
 function Home(){
 
@@ -144,7 +114,10 @@ function Signin(){
         axios.post('http://127.0.0.1:4000/signup',{
             email: val.current.value
         }).then((res) => {
+
             console.log(res);
+            Welcome(res.data);
+
         }).catch((error) => {
             console.log(error);
         });
@@ -172,6 +145,16 @@ function Signin(){
                 </form>
                 <button onClick = {sub}>Submit</button>
             </div>
+        </div>
+    )
+}
+
+function Welcome(props){
+
+    return(
+        <div>
+            <br />
+            <h2>{props.email}</h2>
         </div>
     )
 }
