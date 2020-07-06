@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-d
 import axios from 'axios';
 import './App.css';
 
+let user;
+
 export default function App(){
     return(
         <Router>
@@ -19,6 +21,7 @@ export default function App(){
                 <Route path = '/signup'>
                     <Signup />
                 </Route>
+                <Route path = '/welcome' component={Welcome} />
             </Switch>
         </Router>
     )
@@ -33,6 +36,7 @@ function Home(){
         let path = '/signup';
         history.push(path);
     }
+
 
     return(
         <>
@@ -94,7 +98,6 @@ function Tiles(props){
         <span style={{fontSize: "20px", margin: "5px"}}>{props.name}</span>    
         </button>
     )
-
 }
 
 function About(){
@@ -106,7 +109,8 @@ function About(){
 }
 
 function Signin(){
-
+    
+    const history = useHistory();
     let val = React.createRef();
 
     const sub = () => {
@@ -116,13 +120,15 @@ function Signin(){
         }).then((res) => {
 
             console.log(res);
-            Welcome(res.data);
+            user = res.data;
+            history.push('/welcome');
 
         }).catch((error) => {
             console.log(error);
         });
         
         console.log('submited');
+        
     }
 
     return(
@@ -149,14 +155,20 @@ function Signin(){
     )
 }
 
-function Welcome(props){
-
-    return(
-        <div>
-            <br />
-            <h2>{props.email}</h2>
-        </div>
-    )
+function Welcome(){
+    
+    if(user){
+        return(
+            <div className="text-center">
+                <br />
+                <h2>Welcome {user}</h2>
+            </div>
+        );
+    } else {
+        return(
+       <h2>You need to signin first.</h2>
+        );
+    }
 }
 
 function Signup(){
