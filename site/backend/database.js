@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const connectDatabase = () => {
   mongoose
-    .connect(
-      "mongodb+srv://Nexus:Samipan@2001@cluster0.yirms.mongodb.net/database1?retryWrites=true&w=majority",
-      { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
-    )
+    .connect(process.env.DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
     .then((connection) => {
       console.log(connection.connection.host);
     })
