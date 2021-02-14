@@ -14,6 +14,7 @@ import Profile from "./profile";
 import Feed from "./feed";
 import Write from "./write";
 import Blog from "./blog";
+import Author from "./author";
 
 export default function Routes({ user, setUser }) {
   return (
@@ -42,6 +43,7 @@ export default function Routes({ user, setUser }) {
           {user ? <Write /> : <Signin setUser={setUser} user={user} />}
         </Route>
         <Route path="/blog/:id" component={Blog} />
+        <Route path="/author/:id" component={Author} />
       </Switch>
     </Router>
   );

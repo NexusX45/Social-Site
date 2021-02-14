@@ -19,6 +19,7 @@ export default function Signin({ setUser, user }) {
         password: password.current.value,
       })
       .then((res) => {
+        console.log(res);
         if (res.data == "Invalid") {
           setShow(true);
         } else {
@@ -30,8 +31,8 @@ export default function Signin({ setUser, user }) {
               headers: { Authorization: localStorage.getItem("token") },
             })
             .then((res) => {
-              console.log(res.data.user);
-              setUser(res.data.user);
+              console.log(res.data.userSign);
+              setUser(res.data.userSign);
             })
             .catch((err) => {
               console.log(err);

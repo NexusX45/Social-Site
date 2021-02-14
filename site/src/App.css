@@ -1,3 +1,7 @@
 .navbar-custom {
-  background-color: #e4f1f5;
+  background-color: #d4edfc;
+}
+
+.text-card:hover {
+  cursor: pointer;
 }

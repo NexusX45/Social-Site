@@ -1,11 +1,31 @@
+import Axios from "axios";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./css/nav.css";
 
 export default function Nav({ user, setUser }) {
-  const history = useHistory();
+  const [results, setResults] = useState([]);
+  const [show, setShow] = useState(false);
+
   const LogOut = () => {
     localStorage.clear();
     setUser(null);
+  };
+
+  const handleSearch = (e) => {
+    if (e.target.value != "") {
+      Axios.get("http://localhost:4000/search?name=" + e.target.value)
+        .then((res) => {
+          console.log(res);
+          setResults(res.data);
+          setShow(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setShow(false);
+    }
   };
 
   return (
@@ -33,10 +53,34 @@ export default function Nav({ user, setUser }) {
       <input
         class="form-control form-control-dark mx-2"
         type="text"
-        placeholder="Search"
+        placeholder="Search for users..."
         aria-label="Search"
-        style={{ width: "70%" }}
+        style={{ width: "60%" }}
+        onChange={handleSearch}
       ></input>
+      <div
+        style={{
+          width: "300px",
+          position: "fixed",
+          backgroundColor: "rgba(255, 255, 255, 0.6)",
+          height: "300px",
+          left: "270px",
+          top: "75px",
+        }}
+        className={show ? "visible" : "not_visible"}
+      >
+        {results.map((name) => (
+          <div className="lead my-1 hover">
+            <a
+              class="mx-2"
+              style={{ textDecoration: "none", color: "black" }}
+              href={"author/" + name._id}
+            >
+              {name.name}
+            </a>
+          </div>
+        ))}
+      </div>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">

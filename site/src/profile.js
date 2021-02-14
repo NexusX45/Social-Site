@@ -15,7 +15,7 @@ export default function Profile() {
         })
         .then((res) => {
           console.log(res.data.user);
-          setUser(res.data.user);
+          setUser(res.data.userSign);
         })
         .catch((err) => {
           console.log(err);
