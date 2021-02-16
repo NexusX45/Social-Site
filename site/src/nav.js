@@ -14,7 +14,7 @@ export default function Nav({ user, setUser }) {
 
   const handleSearch = (e) => {
     if (e.target.value != "") {
-      Axios.get("http://localhost:4000/search?name=" + e.target.value)
+      Axios.get("http://localhost:4000/author/search/" + e.target.value)
         .then((res) => {
           console.log(res);
           setResults(res.data);

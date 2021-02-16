@@ -14,7 +14,7 @@ export default function Signin({ setUser, user }) {
   const [show, setShow] = useState(false);
   const sub = () => {
     axios
-      .post("http://127.0.0.1:4000/signin", {
+      .post("http://127.0.0.1:4000/user/signin", {
         email: email.current.value,
         password: password.current.value,
       })
@@ -27,7 +27,7 @@ export default function Signin({ setUser, user }) {
           localStorage.setItem("token", res.data.token);
 
           axios
-            .get("http://127.0.0.1:4000/profile", {
+            .get("http://127.0.0.1:4000/user/profile", {
               headers: { Authorization: localStorage.getItem("token") },
             })
             .then((res) => {

@@ -10,7 +10,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:4000/profile", {
+      .get("http://127.0.0.1:4000/user/profile", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {

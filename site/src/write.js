@@ -13,7 +13,7 @@ export default function Write() {
 
   const publish = () => {
     axios.post(
-      "http://127.0.0.1:4000/write",
+      "http://127.0.0.1:4000/user/write",
       {
         title: title.current.value,
         body: body.current.value,

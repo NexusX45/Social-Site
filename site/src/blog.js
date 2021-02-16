@@ -6,12 +6,14 @@ import { Card, Button } from "react-bootstrap";
 export default function Blog(props) {
   const [data, setData] = useState([]);
   const [author, setAuthor] = useState("");
+  const [authorFollowing, setAuthorFollowing] = useState([]);
+  const [authorFollower, setAuthorFollower] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followed, setFollowed] = useState(false);
   useEffect(() => {
     console.log(props.match.params.id);
     axios
-      .get("http://127.0.0.1:4000/blog?id=" + props.match.params.id)
+      .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -28,14 +30,20 @@ export default function Blog(props) {
       });
   }, []);
 
+  // useEffect(() => {
+  //   console.log(author.followed_authors_id.length);
+  // }, [author]);
+
   useEffect(() => {
     console.log(data.author_id);
     if (data.author_id)
       axios
-        .get("http://127.0.0.1:4000/user?id=" + data.author_id)
+        .get("http://127.0.0.1:4000/author/" + data.author_id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
+          setAuthorFollowing(res.data.followed_authors_id);
+          setAuthorFollower(res.data.follower_authors_id);
         })
         .catch((err) => {
           console.log(err);
@@ -46,6 +54,21 @@ export default function Blog(props) {
       setFollowed(false);
     }
   }, [data, following]);
+
+  useEffect(() => {
+    if (data.author_id)
+      axios
+        .get("http://127.0.0.1:4000/author/" + data.author_id)
+        .then((res) => {
+          console.log(res);
+          setAuthor(res.data);
+          setAuthorFollowing(res.data.followed_authors_id);
+          setAuthorFollower(res.data.follower_authors_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [followed]);
 
   const handleFollowAuthor = () => {
     axios
@@ -90,7 +113,7 @@ export default function Blog(props) {
                 href={"/author/" + data.author_id}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                {author}
+                {author.name}
               </a>
             </Card.Subtitle>
             <Card.Text>
@@ -107,8 +130,25 @@ export default function Blog(props) {
         </Card>
         <Card className="mx-3" style={{ width: "30%", height: "300px" }}>
           <Card.Body>
-            <Card.Title>{author}</Card.Title>
+            <Card.Title className="text-center">{author.name}</Card.Title>
             <Card.Text>
+              <div className="d-flex mb-3">
+                <div className="row" style={{ width: "100%" }}>
+                  <div className="col-7">
+                    <div className="h5 text-center">Following</div>
+                    <div className="h5 text-center">
+                      {authorFollowing.length}
+                    </div>
+                  </div>
+                  <div className="col-5">
+                    <div className="h5 text-center">Follower</div>
+                    <div className="h5 text-center">
+                      {authorFollower.length}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {followed ? (
                 <Button
                   variant="outline-success"

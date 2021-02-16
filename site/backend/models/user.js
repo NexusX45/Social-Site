@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
   email: { type: "string", required: "Please enter email", trim: true },
   password: { type: "string", required: "Please enter password", trim: false },
   followed_authors_id: [String],
+  follower_authors_id: [String],
 });
 
 module.exports = mongoose.model("User", userSchema);

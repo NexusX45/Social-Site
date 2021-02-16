@@ -6,12 +6,17 @@ import { Button, Card } from "react-bootstrap";
 export default function Author(props) {
   const [followed, setFollowed] = useState(false);
   const [following, setFollowing] = useState([]);
-  const [author, setAuthor] = useState([]);
+  const [author, setAuthor] = useState("");
+  const [authorFollowing, setAuthorFollowing] = useState([]);
+  const [authorFollower, setAuthorFollower] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/user?id=" + props.match.params.id)
+      .get("http://localhost:4000/author/" + props.match.params.id)
       .then((res) => {
+        console.log(res.data);
         setAuthor(res.data);
+        setAuthorFollowing(res.data.followed_authors_id);
+        setAuthorFollower(res.data.follower_authors_id);
       })
       .catch((err) => {
         console.log(err);
@@ -36,8 +41,20 @@ export default function Author(props) {
   }, [following]);
 
   useEffect(() => {
-    console.log(followed);
+    if (author._id)
+      axios
+        .get("http://127.0.0.1:4000/author/" + author._id)
+        .then((res) => {
+          console.log(res);
+          setAuthor(res.data);
+          setAuthorFollowing(res.data.followed_authors_id);
+          setAuthorFollower(res.data.follower_authors_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }, [followed]);
+
   const handleFollowAuthor = () => {
     axios
       .post(
@@ -69,9 +86,21 @@ export default function Author(props) {
   };
   return (
     <div className="container">
-      <Card className="text-center my-3">
+      <Card className="text-center my-3 mx-auto" style={{ width: "30em" }}>
         <Card.Body>
-          <div className="h3 my-3">{author}</div>
+          <div className="h3 my-3">{author.name}</div>
+          <div className="d-flex mb-3">
+            <div className="row" style={{ width: "100%" }}>
+              <div className="col-7">
+                <div className="h5 text-center">Following</div>
+                <div className="h5 text-center">{authorFollowing.length}</div>
+              </div>
+              <div className="col-5">
+                <div className="h5 text-center">Follower</div>
+                <div className="h5 text-center">{authorFollower.length}</div>
+              </div>
+            </div>
+          </div>
           {followed ? (
             <Button variant="outline-success" onClick={handleUnfollowAuthor}>
               Unfollow
