@@ -1,7 +1,9 @@
-import React from "react";
+import React, { createRef } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 export default function Blog(props) {
   const [data, setData] = useState([]);
@@ -10,6 +12,12 @@ export default function Blog(props) {
   const [authorFollower, setAuthorFollower] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followed, setFollowed] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState([]);
+  const comment = createRef();
+  const history = useHistory();
+
   useEffect(() => {
     console.log(props.match.params.id);
     axios
@@ -17,6 +25,8 @@ export default function Blog(props) {
       .then((res) => {
         console.log(res.data);
         setData(res.data);
+        setComments(res.data.comments);
+        setLikes(res.data.likes);
       })
       .catch((err) => {
         console.log(err);
@@ -30,10 +40,20 @@ export default function Blog(props) {
       });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(author.followed_authors_id.length);
-  // }, [author]);
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/user/profile", {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (likes.indexOf(res.data.userSign._id) != -1) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+      });
+  }, [likes]);
   useEffect(() => {
     console.log(data.author_id);
     if (data.author_id)
@@ -54,6 +74,17 @@ export default function Blog(props) {
       setFollowed(false);
     }
   }, [data, following]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
+      .then((res) => {
+        setLikes(res.data.likes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [liked]);
 
   useEffect(() => {
     if (data.author_id)
@@ -100,6 +131,76 @@ export default function Blog(props) {
       });
   };
 
+  const handleComment = () => {
+    if (comment.current.value != "") {
+      axios
+        .post(
+          "http://localhost:4000/blog/comment",
+          {
+            id: props.match.params.id,
+            author_id: author._id,
+            body: comment.current.value,
+            author: author.name,
+          },
+          { headers: { Authorization: localStorage.getItem("token") } }
+        )
+        .then((res) => {
+          axios
+            .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
+            .then((res) => {
+              setComments(res.data.comments);
+              document.getElementById("comment-input").value = "";
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleAuthor = (author_id) => {
+    history.push("/author/" + author_id);
+  };
+
+  const handleLike = () => {
+    if (liked) {
+      axios
+        .post(
+          "http://localhost:4000/blog/unlike",
+          {
+            id: props.match.params.id,
+          },
+          { headers: { Authorization: localStorage.getItem("token") } }
+        )
+        .then((res) => {
+          console.log(res);
+          setLiked(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post(
+          "http://localhost:4000/blog/like",
+          {
+            id: props.match.params.id,
+          },
+          { headers: { Authorization: localStorage.getItem("token") } }
+        )
+        .then((res) => {
+          console.log(res);
+          setLiked(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <div className="container">
       <div className="py-3 d-flex">
@@ -117,14 +218,55 @@ export default function Blog(props) {
               </a>
             </Card.Subtitle>
             <Card.Text>
-              <div className="mt-4 lead">{data.body}</div>
+              <div className="mt-4 lead">
+                <ReactMarkdown>{data.body}</ReactMarkdown>
+              </div>
+              <div className="mt-5 d-flex">
+                {liked ? (
+                  <Button variant="outline-primary" onClick={handleLike}>
+                    <div className>{likes.length} Liked</div>
+                  </Button>
+                ) : (
+                  <Button variant="outline-primary" onClick={handleLike}>
+                    <div className>{likes.length} Like</div>
+                  </Button>
+                )}
+                <Button variant="outline-success" className="mx-2">
+                  Save
+                </Button>
+                <Button variant="outline-secondary">Share</Button>
+              </div>
             </Card.Text>
             <div className="mt-5">
               <div className="my-2">Comments</div>
-              <input style={{ width: "70%" }}></input>
-              <Button className="mx-2" variant="outline-primary">
+              <input
+                id="comment-input"
+                style={{ width: "70%" }}
+                ref={comment}
+              ></input>
+              <Button
+                className="mx-2"
+                variant="outline-primary"
+                onClick={handleComment}
+              >
                 Submit
               </Button>
+            </div>
+            <div>
+              {comments.map((item) => (
+                <div className="mt-3">
+                  <div
+                    className="h5 text-card"
+                    style={{ lineHeight: "2px" }}
+                    onClick={() => {
+                      handleAuthor(item.author_id);
+                    }}
+                  >
+                    {item.author}
+                  </div>
+                  <div className="text-dark">{item.body}</div>
+                </div>
+              ))}
             </div>
           </Card.Body>
         </Card>

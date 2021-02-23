@@ -15,6 +15,7 @@ import Feed from "./feed";
 import Write from "./write";
 import Blog from "./blog";
 import Author from "./author";
+import Myblogs from "./myblogs";
 
 export default function Routes({ user, setUser }) {
   return (
@@ -42,8 +43,11 @@ export default function Routes({ user, setUser }) {
         <Route path="/write">
           {user ? <Write /> : <Signin setUser={setUser} user={user} />}
         </Route>
-        <Route path="/blog/:id" component={Blog} />
+        <Route path="/blog/:id" component={Blog} user={user} />
         <Route path="/author/:id" component={Author} />
+        <Route path="/myblog">
+          {user ? <Myblogs /> : <Signin setUser={setUser} user={user} />}
+        </Route>
       </Switch>
     </Router>
   );

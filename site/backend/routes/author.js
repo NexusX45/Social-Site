@@ -1,4 +1,5 @@
 const express = require("express");
+const user = require("../models/user");
 const User = require("../models/user");
 const router = express.Router();
 
@@ -13,6 +14,18 @@ router.get("/:id", (req, res) => {
         console.log(err);
       });
   }
+});
+
+router.post("/getBatch", (req, res) => {
+  console.log(req.body.id);
+  User.find({ id: req.body.id })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get("/search/:name", (req, res) => {

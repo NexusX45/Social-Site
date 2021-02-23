@@ -55,7 +55,6 @@ router.get("/feed", (req, res) => {
       } else {
         User.findById(authData.userSign._id)
           .then((result) => {
-            console.log(result.followed_authors_id);
             Blog.find({ author_id: result.followed_authors_id })
               .then((blog) => {
                 res.json(blog);

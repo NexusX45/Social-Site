@@ -56,7 +56,7 @@ export default function Write() {
                 resize: "none",
               }}
               ref={body}
-              placeholder="Write your content here..."
+              placeholder="Write your content here... (Markdown is supported)"
             ></textarea>
           </div>
           <div className="d-flex">
