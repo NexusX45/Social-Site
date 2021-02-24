@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory,
   Redirect,
 } from "react-router-dom";
 import About from "./about";
@@ -16,6 +15,7 @@ import Write from "./write";
 import Blog from "./blog";
 import Author from "./author";
 import Myblogs from "./myblogs";
+import UpdateBlog from "./updateblog";
 
 export default function Routes({ user, setUser }) {
   return (
@@ -43,11 +43,15 @@ export default function Routes({ user, setUser }) {
         <Route path="/write">
           {user ? <Write /> : <Signin setUser={setUser} user={user} />}
         </Route>
-        <Route path="/blog/:id" component={Blog} user={user} />
+        <Route
+          path="/blog/:id"
+          render={(props) => <Blog user={user} id={props.match.params.id} />}
+        />
         <Route path="/author/:id" component={Author} />
         <Route path="/myblog">
           {user ? <Myblogs /> : <Signin setUser={setUser} user={user} />}
         </Route>
+        <Route path="/update/:id" component={UpdateBlog} />
       </Switch>
     </Router>
   );

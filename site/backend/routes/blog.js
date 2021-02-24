@@ -108,4 +108,27 @@ router.post("/unlike", (req, res) => {
     }
   );
 });
+
+router.post("/update", (req, res) => {
+  jwt.verify(
+    req.headers["authorization"],
+    process.env.SEC_KEY,
+    (err, authData) => {
+      if (err) {
+        res.send(err);
+      } else {
+        Blog.findByIdAndUpdate(req.body.id, {
+          title: req.body.title,
+          body: req.body.body,
+        })
+          .then((result) => {
+            res.send(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  );
+});
 module.exports = router;

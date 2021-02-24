@@ -5,7 +5,7 @@ import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
-export default function Blog(props) {
+export default function Blog({ id, user }) {
   const [data, setData] = useState([]);
   const [author, setAuthor] = useState("");
   const [authorFollowing, setAuthorFollowing] = useState([]);
@@ -18,10 +18,11 @@ export default function Blog(props) {
   const comment = createRef();
   const history = useHistory();
 
+  //Initial Request....
   useEffect(() => {
-    console.log(props.match.params.id);
+    console.log(user);
     axios
-      .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
+      .get("http://127.0.0.1:4000/blog/" + id)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -38,6 +39,16 @@ export default function Blog(props) {
       .then((res) => {
         setFollowing(res.data);
       });
+
+    // axios
+    //   .get("http://localhost:4000/user/profile")
+    //   .then((res) => {
+    //     console.log(res);
+    //     setUser(res.userSign);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -77,7 +88,7 @@ export default function Blog(props) {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
+      .get("http://127.0.0.1:4000/blog/" + id)
       .then((res) => {
         setLikes(res.data.likes);
       })
@@ -137,7 +148,7 @@ export default function Blog(props) {
         .post(
           "http://localhost:4000/blog/comment",
           {
-            id: props.match.params.id,
+            id: id,
             author_id: author._id,
             body: comment.current.value,
             author: author.name,
@@ -146,7 +157,7 @@ export default function Blog(props) {
         )
         .then((res) => {
           axios
-            .get("http://127.0.0.1:4000/blog/" + props.match.params.id)
+            .get("http://127.0.0.1:4000/blog/" + id)
             .then((res) => {
               setComments(res.data.comments);
               document.getElementById("comment-input").value = "";
@@ -171,7 +182,7 @@ export default function Blog(props) {
         .post(
           "http://localhost:4000/blog/unlike",
           {
-            id: props.match.params.id,
+            id: id,
           },
           { headers: { Authorization: localStorage.getItem("token") } }
         )
@@ -187,7 +198,7 @@ export default function Blog(props) {
         .post(
           "http://localhost:4000/blog/like",
           {
-            id: props.match.params.id,
+            id: id,
           },
           { headers: { Authorization: localStorage.getItem("token") } }
         )
@@ -201,13 +212,32 @@ export default function Blog(props) {
     }
   };
 
+  const handleUpdate = () => {
+    history.push("/update/" + id);
+  };
+
   return (
     <div className="container">
       <div className="py-3 d-flex">
         <Card style={{ width: "70%" }}>
           <Card.Body>
             <Card.Title>
-              <div className="h2">{data.title}</div>
+              <div className="d-flex">
+                <div className="row" style={{ width: "100%" }}>
+                  <div className="col-9">
+                    <div className="h2">{data.title}</div>
+                  </div>
+                  <div className="col">
+                    {user._id == data.author_id ? (
+                      <Button variant="outline-danger" onClick={handleUpdate}>
+                        Edit Blog
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
             </Card.Title>
             <Card.Subtitle>
               <a
@@ -290,8 +320,15 @@ export default function Blog(props) {
                   </div>
                 </div>
               </div>
-
-              {followed ? (
+              {user._id == data.author_id ? (
+                <Button
+                  onClick={() => history.push("/profile")}
+                  variant="outline-success"
+                  style={{ width: "100%" }}
+                >
+                  Profile
+                </Button>
+              ) : followed ? (
                 <Button
                   variant="outline-success"
                   style={{ width: "100%" }}
@@ -308,14 +345,27 @@ export default function Blog(props) {
                   Follow
                 </Button>
               )}
+              {/* {followed ? (
+                <Button
+                  variant="outline-success"
+                  style={{ width: "100%" }}
+                  onClick={handleUnfollowAuthor}
+                >
+                  Unfollow
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-success"
+                  style={{ width: "100%" }}
+                  onClick={handleFollowAuthor}
+                >
+                  Follow
+                </Button>
+              )} */}
             </Card.Text>
           </Card.Body>
         </Card>
       </div>
-
-      {/* <div className="h3 my-3">{data.title}</div> */}
-      {/* <div className="h6">{author}</div> */}
-      {/* <div className="lead my-3">{data.body}</div> */}
     </div>
   );
 }
