@@ -45,11 +45,11 @@ export default function Routes({ user, setUser }) {
         </Route>
         <Route
           path="/blog/:id"
-          render={(props) => <Blog user={user} id={props.match.params.id} />}
+          render={(props) => <Blog id={props.match.params.id} />}
         />
         <Route path="/author/:id" component={Author} />
         <Route path="/myblog">
-          {user ? <Myblogs /> : <Signin setUser={setUser} user={user} />}
+          {user ? <Myblogs /> : <Signin setUser={setUser} />}
         </Route>
         <Route path="/update/:id" component={UpdateBlog} />
       </Switch>

@@ -1,19 +1,25 @@
 import Axios from "axios";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./css/nav.css";
+import { useSelector, useDispatch } from "react-redux";
+import { LogoutUser } from "./redux/actions/";
 
-export default function Nav({ user, setUser }) {
+export default function Nav({ setUser }) {
   const [results, setResults] = useState([]);
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  console.log(user);
 
   const LogOut = () => {
     localStorage.clear();
     setUser(null);
+    dispatch(LogoutUser());
   };
 
   const handleSearch = (e) => {
-    if (e.target.value != "") {
+    if (e.target.value !== "") {
       Axios.get("http://localhost:4000/author/search/" + e.target.value)
         .then((res) => {
           console.log(res);
@@ -86,13 +92,13 @@ export default function Nav({ user, setUser }) {
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active"></li>
         </ul>
-        {user ? (
+        {user.loggedIn ? (
           <div>
             <a class="p-2 text-dark" href="/write">
               Write
             </a>
             <a class="p-2 text-dark mr-2" href="/profile">
-              {user.name}
+              {user.user_data.name}
             </a>
             <button class="btn btn-secondary" onClick={LogOut}>
               Log out
@@ -105,7 +111,7 @@ export default function Nav({ user, setUser }) {
               Subscribe
             </a>
             <a class="p-2 text-dark" href="/signin">
-              {user ? user.name : "Sign In"}
+              Sign In
             </a>
             <a class="p-2 text-dark" href="/write">
               Write

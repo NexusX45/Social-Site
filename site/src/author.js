@@ -33,7 +33,7 @@ export default function Author(props) {
 
   useEffect(() => {
     console.log(following.indexOf(props.match.params.id));
-    if (following.indexOf(props.match.params.id) != -1) {
+    if (following.indexOf(props.match.params.id) !== -1) {
       setFollowed(true);
     } else {
       setFollowed(false);

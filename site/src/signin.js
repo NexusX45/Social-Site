@@ -1,16 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { LoginUser } from "./redux/actions/index";
+import { useDispatch } from "react-redux";
 
 import axios from "axios";
 
 import "./css/signin.css";
 
-export default function Signin({ setUser, user }) {
+export default function Signin({ setUser }) {
   const history = useHistory();
   const email = React.createRef();
   const password = React.createRef();
-
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const sub = () => {
     axios
@@ -20,7 +22,7 @@ export default function Signin({ setUser, user }) {
       })
       .then((res) => {
         console.log(res);
-        if (res.data == "Invalid") {
+        if (res.data === "Invalid") {
           setShow(true);
         } else {
           setShow(false);
@@ -33,6 +35,7 @@ export default function Signin({ setUser, user }) {
             .then((res) => {
               console.log(res.data.userSign);
               setUser(res.data.userSign);
+              dispatch(LoginUser(res.data.userSign));
             })
             .catch((err) => {
               console.log(err);

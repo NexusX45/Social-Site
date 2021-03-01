@@ -1,11 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import axios from "axios";
 
 export default function Signup({ setUser }) {
-  const history = useHistory();
-
   const name = React.createRef();
   const email = React.createRef();
   const password = React.createRef();

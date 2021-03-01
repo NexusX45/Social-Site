@@ -3,12 +3,10 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { useEffect } from "react";
-import { useState } from "react";
 
 export default function UpdateBlog(props) {
   const title = React.createRef();
   const body = React.createRef();
-  const picture = "";
 
   const history = useHistory();
 

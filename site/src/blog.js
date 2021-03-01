@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 
-export default function Blog({ id, user }) {
+export default function Blog({ id }) {
   const [data, setData] = useState([]);
   const [author, setAuthor] = useState("");
   const [authorFollowing, setAuthorFollowing] = useState([]);
@@ -15,6 +16,7 @@ export default function Blog({ id, user }) {
   const [comments, setComments] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
+  const user = useSelector((state) => state.user);
   const comment = createRef();
   const history = useHistory();
 
@@ -39,32 +41,16 @@ export default function Blog({ id, user }) {
       .then((res) => {
         setFollowing(res.data);
       });
-
-    // axios
-    //   .get("http://localhost:4000/user/profile")
-    //   .then((res) => {
-    //     console.log(res);
-    //     setUser(res.userSign);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/user/profile", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (likes.indexOf(res.data.userSign._id) != -1) {
-          setLiked(true);
-        } else {
-          setLiked(false);
-        }
-      });
+    if (likes.indexOf(user.user_data._id) !== -1) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
   }, [likes]);
+
   useEffect(() => {
     console.log(data.author_id);
     if (data.author_id)
@@ -79,7 +65,7 @@ export default function Blog({ id, user }) {
         .catch((err) => {
           console.log(err);
         });
-    if (following.indexOf(data.author_id) != -1) {
+    if (following.indexOf(data.author_id) !== -1) {
       setFollowed(true);
     } else {
       setFollowed(false);
@@ -143,7 +129,7 @@ export default function Blog({ id, user }) {
   };
 
   const handleComment = () => {
-    if (comment.current.value != "") {
+    if (comment.current.value !== "") {
       axios
         .post(
           "http://localhost:4000/blog/comment",
@@ -228,7 +214,7 @@ export default function Blog({ id, user }) {
                     <div className="h2">{data.title}</div>
                   </div>
                   <div className="col">
-                    {user._id == data.author_id ? (
+                    {user.user_data._id === data.author_id ? (
                       <Button variant="outline-danger" onClick={handleUpdate}>
                         Edit Blog
                       </Button>
@@ -320,7 +306,7 @@ export default function Blog({ id, user }) {
                   </div>
                 </div>
               </div>
-              {user._id == data.author_id ? (
+              {user._id === data.author_id ? (
                 <Button
                   onClick={() => history.push("/profile")}
                   variant="outline-success"
@@ -345,23 +331,6 @@ export default function Blog({ id, user }) {
                   Follow
                 </Button>
               )}
-              {/* {followed ? (
-                <Button
-                  variant="outline-success"
-                  style={{ width: "100%" }}
-                  onClick={handleUnfollowAuthor}
-                >
-                  Unfollow
-                </Button>
-              ) : (
-                <Button
-                  variant="outline-success"
-                  style={{ width: "100%" }}
-                  onClick={handleFollowAuthor}
-                >
-                  Follow
-                </Button>
-              )} */}
             </Card.Text>
           </Card.Body>
         </Card>

@@ -4,22 +4,26 @@ import Nav from "./nav";
 import Routes from "./routes";
 import axios from "axios";
 import "./App.css";
+import { useDispatch } from "react-redux";
+import { LoginUser } from "./redux/actions";
 
 export default function App() {
   const [user, setUser] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios.defaults.headers.common["Authorization"] = localStorage.getItem(
         "token"
       );
+      axios
+        .get("http://127.0.0.1:4000/user/profile")
+        .then((res) => {
+          setUser(res.data.userSign);
+          dispatch(LoginUser(res.data.userSign));
+        })
+        .catch((err) => console.log(err));
     }
-    axios
-      .get("http://127.0.0.1:4000/user/profile")
-      .then((res) => {
-        setUser(res.data.userSign);
-      })
-      .catch((err) => console.log(err));
   }, []);
 
   return (
