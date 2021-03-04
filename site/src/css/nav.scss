@@ -1,0 +1,52 @@
+#navbarSupportedContent {
+  flex: auto;
+}
+
+.visible {
+  visibility: visible;
+  position: relative;
+  top: 50px;
+  right: 1240px;
+}
+
+.not_visible {
+  display: none;
+}
+
+.hover:hover {
+  background-color: rgba(166, 230, 245, 0.6);
+}
+
+.nav-buttons {
+  margin-top: 10px;
+}
+
+.nav-input {
+  width: 60%;
+  margin-right: 2.5%;
+}
+
+.navbar-brand-small {
+  display: none;
+}
+
+.navbar-brand-big {
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .nav-input {
+    width: 100%;
+    margin: 0%;
+  }
+  .navbar-brand-big {
+    display: none;
+  }
+  .navbar-brand-small {
+    display: block;
+  }
+  #navbarSupportedContent {
+    flex: none;
+    width: 95%;
+  }
+}

@@ -5,6 +5,7 @@ import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
+import "./css/blog.scss";
 
 export default function Blog({ id }) {
   const [data, setData] = useState([]);
@@ -22,9 +23,8 @@ export default function Blog({ id }) {
 
   //Initial Request....
   useEffect(() => {
-    console.log(user);
     axios
-      .get("http://127.0.0.1:4000/blog/" + id)
+      .get(`http://127.0.0.1:4000/blog/${id}`)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -41,7 +41,7 @@ export default function Blog({ id }) {
       .then((res) => {
         setFollowing(res.data);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (likes.indexOf(user.user_data._id) !== -1) {
@@ -49,7 +49,7 @@ export default function Blog({ id }) {
     } else {
       setLiked(false);
     }
-  }, [likes]);
+  }, [likes, user]);
 
   useEffect(() => {
     console.log(data.author_id);
@@ -81,7 +81,7 @@ export default function Blog({ id }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [liked]);
+  }, [liked, id]);
 
   useEffect(() => {
     if (data.author_id)
@@ -96,7 +96,7 @@ export default function Blog({ id }) {
         .catch((err) => {
           console.log(err);
         });
-  }, [followed]);
+  }, [followed, data]);
 
   const handleFollowAuthor = () => {
     axios
@@ -204,25 +204,25 @@ export default function Blog({ id }) {
 
   return (
     <div className="container">
-      <div className="py-3 d-flex">
-        <Card style={{ width: "70%" }}>
+      <div className="py-3 d-flex flex-wrap">
+        <Card className="blog-card">
           <Card.Body>
             <Card.Title>
               <div className="d-flex">
-                <div className="row" style={{ width: "100%" }}>
-                  <div className="col-9">
-                    <div className="h2">{data.title}</div>
-                  </div>
-                  <div className="col">
-                    {user.user_data._id === data.author_id ? (
+                {user.user_data._id === data.author_id ? (
+                  <div className="row" style={{ width: "100%" }}>
+                    <div className="col-9">
+                      <div className="h2">{data.title}</div>
+                    </div>
+                    <div className="col">
                       <Button variant="outline-danger" onClick={handleUpdate}>
                         Edit Blog
                       </Button>
-                    ) : (
-                      ""
-                    )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="h2">{data.title}</div>
+                )}
               </div>
             </Card.Title>
             <Card.Subtitle>
@@ -247,19 +247,15 @@ export default function Blog({ id }) {
                     <div className>{likes.length} Like</div>
                   </Button>
                 )}
-                <Button variant="outline-success" className="mx-2">
+                {/* <Button variant="outline-success" className="mx-2">
                   Save
                 </Button>
-                <Button variant="outline-secondary">Share</Button>
+                <Button variant="outline-secondary">Share</Button> */}
               </div>
             </Card.Text>
             <div className="mt-5">
               <div className="my-2">Comments</div>
-              <input
-                id="comment-input"
-                style={{ width: "70%" }}
-                ref={comment}
-              ></input>
+              <input id="comment-input" ref={comment}></input>
               <Button
                 className="mx-2"
                 variant="outline-primary"
@@ -286,8 +282,8 @@ export default function Blog({ id }) {
             </div>
           </Card.Body>
         </Card>
-        <Card className="mx-3" style={{ width: "30%", height: "300px" }}>
-          <Card.Body>
+        <Card className="mx-auto author-card" style={{ height: "300px" }}>
+          <Card.Body style={{ padding: "10px" }}>
             <Card.Title className="text-center">{author.name}</Card.Title>
             <Card.Text>
               <div className="d-flex mb-3">
@@ -298,7 +294,7 @@ export default function Blog({ id }) {
                       {authorFollowing.length}
                     </div>
                   </div>
-                  <div className="col-5">
+                  <div className="col-5" style={{ padding: "0px" }}>
                     <div className="h5 text-center">Follower</div>
                     <div className="h5 text-center">
                       {authorFollower.length}
@@ -306,7 +302,7 @@ export default function Blog({ id }) {
                   </div>
                 </div>
               </div>
-              {user._id === data.author_id ? (
+              {user.user_data._id === data.author_id ? (
                 <Button
                   onClick={() => history.push("/profile")}
                   variant="outline-success"

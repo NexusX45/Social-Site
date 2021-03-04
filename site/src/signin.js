@@ -1,15 +1,14 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { LoginUser } from "./redux/actions/index";
 import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
 
 import axios from "axios";
 
 import "./css/signin.css";
 
 export default function Signin({ setUser }) {
-  const history = useHistory();
   const email = React.createRef();
   const password = React.createRef();
   const dispatch = useDispatch();
@@ -66,7 +65,9 @@ export default function Signin({ setUser }) {
           <br />
           {show ? <div class="invalid">Invalid Credentials</div> : <div></div>}
         </form>
-        <button onClick={sub}>Submit</button>
+        <Button onClick={sub} className="my-3">
+          Submit
+        </Button>
       </div>
     </div>
   );

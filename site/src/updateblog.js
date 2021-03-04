@@ -17,13 +17,11 @@ export default function UpdateBlog(props) {
         console.log(res);
         body.current.value = res.data.body;
         title.current.value = res.data.title;
-        // setBlogTitle(res.data.title);
-        // setBlogBody(res.data.body);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props, title, body]);
 
   const publish = () => {
     axios.post(

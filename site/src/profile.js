@@ -8,7 +8,7 @@ export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState("");
   useEffect(() => {
-    if (localStorage.length == 0) {
+    if (localStorage.length === 0) {
       history.push("/signin");
     } else {
       axios
@@ -23,7 +23,7 @@ export default function Profile() {
           console.log(err);
         });
     }
-  }, []);
+  }, [history]);
   return (
     <div>
       <div className="container lead my-3">

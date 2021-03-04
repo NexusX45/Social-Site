@@ -29,7 +29,7 @@ export default function Author(props) {
         console.log(res.data);
         setFollowing(res.data);
       });
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     console.log(following.indexOf(props.match.params.id));
@@ -38,7 +38,7 @@ export default function Author(props) {
     } else {
       setFollowed(false);
     }
-  }, [following]);
+  }, [following, props]);
 
   useEffect(() => {
     if (author._id)
@@ -53,7 +53,7 @@ export default function Author(props) {
         .catch((err) => {
           console.log(err);
         });
-  }, [followed]);
+  }, [followed, author]);
 
   const handleFollowAuthor = () => {
     axios
