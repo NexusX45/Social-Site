@@ -6,6 +6,7 @@ import axios from "axios";
 import "./App.css";
 import { useDispatch } from "react-redux";
 import { LoginUser } from "./redux/actions";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -27,14 +28,18 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "rgba(228, 243, 245, 0.6)",
-        minHeight: "1000px",
-      }}
-    >
-      <Nav user={user} setUser={setUser} />
-      <Routes user={user} setUser={setUser} />
-    </div>
+    <Router>
+      <Route>
+        <div
+          style={{
+            backgroundColor: "rgba(228, 243, 245, 0.6)",
+            minHeight: "1000px",
+          }}
+        >
+          <Nav user={user} setUser={setUser} />
+          <Routes user={user} setUser={setUser} />
+        </div>
+      </Route>
+    </Router>
   );
 }

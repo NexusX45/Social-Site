@@ -131,4 +131,20 @@ router.post("/update", (req, res) => {
     }
   );
 });
+
+router.post("/delete", (req, res) => {
+  jwt.verify(
+    req.headers["authorization"],
+    process.env.SEC_KEY,
+    (err, authData) => {
+      if (err) {
+        res.send(err);
+      } else {
+        Blog.findByIdAndDelete(req.body.id).then((result) => {
+          res.send(result);
+        });
+      }
+    }
+  );
+});
 module.exports = router;

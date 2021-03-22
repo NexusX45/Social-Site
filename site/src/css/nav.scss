@@ -2,15 +2,13 @@
   flex: auto;
 }
 
-.visible {
-  visibility: visible;
-  position: relative;
-  top: 50px;
-  right: 1240px;
-}
-
-.not_visible {
-  display: none;
+.search-results {
+  text-align: start;
+  position: absolute;
+  top: 40px;
+  background-color: white;
+  width: 100%;
+  z-index: 10;
 }
 
 .hover:hover {

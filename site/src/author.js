@@ -53,7 +53,7 @@ export default function Author(props) {
         .catch((err) => {
           console.log(err);
         });
-  }, [followed, author]);
+  }, []);
 
   const handleFollowAuthor = () => {
     axios

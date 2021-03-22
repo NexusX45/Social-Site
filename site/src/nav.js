@@ -71,28 +71,41 @@ export default function Nav({ setUser }) {
         {/* <ul class="navbar-nav mr-auto">
           <li class="nav-item active"></li>
         </ul> */}
-        <input
-          class="form-control form-control-dark nav-input"
-          type="text"
-          placeholder="Search for users..."
-          aria-label="Search"
-          onChange={handleSearch}
-        ></input>
-        <div className={show ? "visible" : "not_visible"}>
-          {results.map((name) => (
-            <div className="lead my-1 hover">
-              <a
-                class="mx-2"
-                style={{ textDecoration: "none", color: "black" }}
-                href={"author/" + name._id}
-              >
-                {name.name}
-              </a>
+        <div className=" nav-input" style={{ position: "relative" }}>
+          <input
+            class="form-control form-control-dark"
+            type="text"
+            placeholder="Search for users..."
+            aria-label="Search"
+            onChange={handleSearch}
+          ></input>
+          {show ? (
+            <div className="search-results">
+              {results.map((name) => (
+                <a
+                  href={"/author/" + name._id}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="lead my-1 hover">
+                    <div
+                      class="mx-2"
+                      style={{
+                        color: "black",
+                        width: "100%",
+                      }}
+                    >
+                      {name.name}
+                    </div>
+                  </div>
+                </a>
+              ))}
             </div>
-          ))}
+          ) : (
+            ""
+          )}
         </div>
         {user.loggedIn ? (
-          <div className="nav-buttons">
+          <div className="nav-buttons d-flex justify-content-around">
             <a class="p-2 text-dark" href="/write">
               Write
             </a>

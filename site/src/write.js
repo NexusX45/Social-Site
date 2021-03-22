@@ -27,7 +27,7 @@ export default function Write() {
   return (
     <div className="container">
       <div class="h2 mt-3 mb-5">Write a blog</div>
-      <Card style={{ width: "70%" }}>
+      <Card className="blog-card">
         <Card.Body>
           <div className="my-3 d-flex">
             <input

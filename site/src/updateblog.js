@@ -36,6 +36,17 @@ export default function UpdateBlog(props) {
     history.push("/");
   };
 
+  const deletePost = () => {
+    axios.post(
+      "http://localhost:4000/blog/delete",
+      {
+        id: props.match.params.id,
+      },
+      { headers: { Authorization: localStorage.getItem("token") } }
+    );
+    history.push("/myblog");
+  };
+
   return (
     <div className="container">
       <div class="h2 mt-3 mb-5">Write a blog</div>
@@ -73,12 +84,18 @@ export default function UpdateBlog(props) {
               // value={blogBody}
             ></textarea>
           </div>
-          <div className="d-flex">
+          <div className="d-flex justify-content-between">
             <button
               className="btn btn-primary justify-content-flex-end"
               onClick={publish}
             >
               Publish
+            </button>
+            <button
+              className="btn btn-danger justify-content-flex-end"
+              onClick={deletePost}
+            >
+              Delete
             </button>
           </div>
         </Card.Body>
