@@ -12,7 +12,7 @@ export default function UpdateBlog(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/blog/" + props.match.params.id)
+      .get("/blog/" + props.match.params.id)
       .then((res) => {
         console.log(res);
         body.current.value = res.data.body;
@@ -25,7 +25,7 @@ export default function UpdateBlog(props) {
 
   const publish = () => {
     axios.post(
-      "http://127.0.0.1:4000/blog/update",
+      "/blog/update",
       {
         title: title.current.value,
         body: body.current.value,
@@ -38,7 +38,7 @@ export default function UpdateBlog(props) {
 
   const deletePost = () => {
     axios.post(
-      "http://localhost:4000/blog/delete",
+      "/blog/delete",
       {
         id: props.match.params.id,
       },

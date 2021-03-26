@@ -11,7 +11,7 @@ export default function Author(props) {
   const [authorFollower, setAuthorFollower] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/author/" + props.match.params.id)
+      .get("/author/" + props.match.params.id)
       .then((res) => {
         console.log(res.data);
         setAuthor(res.data);
@@ -22,7 +22,7 @@ export default function Author(props) {
         console.log(err);
       });
     axios
-      .get("http://localhost:4000/following", {
+      .get("/following/", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
@@ -43,7 +43,7 @@ export default function Author(props) {
   useEffect(() => {
     if (author._id)
       axios
-        .get("http://127.0.0.1:4000/author/" + author._id)
+        .get("/author/" + author._id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
@@ -58,7 +58,7 @@ export default function Author(props) {
   const handleFollowAuthor = () => {
     axios
       .post(
-        "http://localhost:4000/follow_author",
+        "/follow_author/",
         {
           author_id: props.match.params.id,
         },
@@ -73,7 +73,7 @@ export default function Author(props) {
   const handleUnfollowAuthor = () => {
     axios
       .post(
-        "http://localhost:4000/unfollow_author",
+        "/unfollow_author/",
         {
           author_id: props.match.params.id,
         },

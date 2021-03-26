@@ -100,6 +100,7 @@ router.post("/signup", (req, res) => {
 router.post("/signin", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  console.log(email);
 
   User.findOne({ email: email }).then((user) => {
     if (user) {
@@ -114,6 +115,7 @@ router.post("/signin", (req, res) => {
         });
       } else res.json("Invalid Token");
     } else {
+      console.log("Error");
       res.json("Invalid");
     }
   });

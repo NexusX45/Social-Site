@@ -10,7 +10,7 @@ export default function Signup({ setUser }) {
 
   const sub = () => {
     axios
-      .post("http://127.0.0.1:4000/user/signup", {
+      .post("/user/signup", {
         name: name.current.value,
         email: email.current.value,
         password: password.current.value,
@@ -19,7 +19,7 @@ export default function Signup({ setUser }) {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         axios
-          .get("http://127.0.0.1:4000/user/profile", {
+          .get("/user/profile", {
             headers: { Authorization: localStorage.getItem("token") },
           })
           .then((res) => {

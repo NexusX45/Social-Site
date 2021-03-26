@@ -18,7 +18,7 @@ export default function App() {
         "token"
       );
       axios
-        .get("http://127.0.0.1:4000/user/profile")
+        .get("/user/profile")
         .then((res) => {
           setUser(res.data.userSign);
           dispatch(LoginUser(res.data.userSign));
