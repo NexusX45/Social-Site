@@ -15,7 +15,7 @@ export default function Feed() {
 
   useEffect(() => {
     axios
-      .get("/user/feed", {
+      .get("/api/user/feed", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {

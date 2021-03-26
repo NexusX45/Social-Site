@@ -12,7 +12,7 @@ export default function Profile() {
       history.push("/signin");
     } else {
       axios
-        .get(`/user/profile`, {
+        .get(`/api/user/profile`, {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((res) => {
