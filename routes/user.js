@@ -112,7 +112,7 @@ router.post("/signin", (req, res) => {
         jwt.sign({ userSign }, process.env.SEC_KEY, (err, token) => {
           res.json({ token });
         });
-      } else res.json("Invalid");
+      } else res.json("Invalid Token");
     } else {
       res.json("Invalid");
     }
