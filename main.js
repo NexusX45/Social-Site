@@ -7,6 +7,7 @@ const AuthorRoute = require("./routes/author");
 const BlogRoute = require("./routes/blog");
 const UserRoute = require("./routes/user");
 require("dotenv").config();
+const path = require("path");
 
 app = express();
 
@@ -106,6 +107,16 @@ app.get("/following", (req, res) => {
   );
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 connectDatabase();
 
-app.listen(4000, () => console.log("Listening on port 4000"));
+app.listen(process.env.PORT || 4000, () =>
+  console.log("Listening on port 4000")
+);

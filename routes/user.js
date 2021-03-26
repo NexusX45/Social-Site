@@ -100,6 +100,7 @@ router.post("/signup", (req, res) => {
 router.post("/signin", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  console.log(email);
 
   User.findOne({ email: email }).then((user) => {
     if (user) {
@@ -112,8 +113,9 @@ router.post("/signin", (req, res) => {
         jwt.sign({ userSign }, process.env.SEC_KEY, (err, token) => {
           res.json({ token });
         });
-      } else res.json("Invalid");
+      } else res.json("Invalid Token");
     } else {
+      console.log("Error");
       res.json("Invalid");
     }
   });

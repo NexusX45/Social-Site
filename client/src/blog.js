@@ -24,7 +24,7 @@ export default function Blog({ id }) {
   //Initial Request....
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:4000/blog/${id}`)
+      .get(`/blog/${id}`)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -35,7 +35,7 @@ export default function Blog({ id }) {
         console.log(err);
       });
     axios
-      .get("http://localhost:4000/following", {
+      .get("/following", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
@@ -55,7 +55,7 @@ export default function Blog({ id }) {
     console.log(data.author_id);
     if (data.author_id)
       axios
-        .get("http://127.0.0.1:4000/author/" + data.author_id)
+        .get("/author/" + data.author_id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
@@ -74,7 +74,7 @@ export default function Blog({ id }) {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:4000/blog/" + id)
+      .get("/blog/" + id)
       .then((res) => {
         setLikes(res.data.likes);
       })
@@ -86,7 +86,7 @@ export default function Blog({ id }) {
   useEffect(() => {
     if (data.author_id)
       axios
-        .get("http://127.0.0.1:4000/author/" + data.author_id)
+        .get("/author/" + data.author_id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
@@ -101,7 +101,7 @@ export default function Blog({ id }) {
   const handleFollowAuthor = () => {
     axios
       .post(
-        "http://localhost:4000/follow_author",
+        "/follow_author",
         {
           author_id: data.author_id,
         },
@@ -116,7 +116,7 @@ export default function Blog({ id }) {
   const handleUnfollowAuthor = () => {
     axios
       .post(
-        "http://localhost:4000/unfollow_author",
+        "/unfollow_author",
         {
           author_id: data.author_id,
         },
@@ -132,7 +132,7 @@ export default function Blog({ id }) {
     if (comment.current.value !== "") {
       axios
         .post(
-          "http://localhost:4000/blog/comment",
+          "/blog/comment",
           {
             id: id,
             author_id: author._id,
@@ -143,7 +143,7 @@ export default function Blog({ id }) {
         )
         .then((res) => {
           axios
-            .get("http://127.0.0.1:4000/blog/" + id)
+            .get("/blog/" + id)
             .then((res) => {
               setComments(res.data.comments);
               document.getElementById("comment-input").value = "";
@@ -166,7 +166,7 @@ export default function Blog({ id }) {
     if (liked) {
       axios
         .post(
-          "http://localhost:4000/blog/unlike",
+          "/blog/unlike",
           {
             id: id,
           },
@@ -182,7 +182,7 @@ export default function Blog({ id }) {
     } else {
       axios
         .post(
-          "http://localhost:4000/blog/like",
+          "/blog/like",
           {
             id: id,
           },
