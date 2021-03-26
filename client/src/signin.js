@@ -15,7 +15,7 @@ export default function Signin({ setUser }) {
   const [show, setShow] = useState(false);
   const sub = () => {
     axios
-      .post(`/user/signin`, {
+      .post(`/api/user/signin`, {
         email: email.current.value,
         password: password.current.value,
       })
@@ -28,7 +28,7 @@ export default function Signin({ setUser }) {
           localStorage.setItem("token", res.data.token);
 
           axios
-            .get(`/user/profile`, {
+            .get(`/api/user/profile`, {
               headers: { Authorization: localStorage.getItem("token") },
             })
             .then((res) => {

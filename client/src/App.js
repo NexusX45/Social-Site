@@ -18,7 +18,7 @@ export default function App() {
         "token"
       );
       axios
-        .get("/user/profile")
+        .get("/api/user/profile")
         .then((res) => {
           setUser(res.data.userSign);
           dispatch(LoginUser(res.data.userSign));

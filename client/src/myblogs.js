@@ -7,7 +7,7 @@ export default function Myblogs() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    axios.post("/blog/myblogs").then((res) => {
+    axios.post("/api/blog/myblogs").then((res) => {
       console.log(res);
       setBlogs(res.data);
     });

@@ -13,7 +13,7 @@ export default function Write() {
 
   const publish = () => {
     axios.post(
-      "/user/write",
+      "/api/user/write",
       {
         title: title.current.value,
         body: body.current.value,

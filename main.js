@@ -14,11 +14,11 @@ app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/user", UserRoute);
-app.use("/author", AuthorRoute);
-app.use("/blog", BlogRoute);
+app.use("/api/user", UserRoute);
+app.use("/api/author", AuthorRoute);
+app.use("/api/blog", BlogRoute);
 
-app.post("/follow_author", (req, response) => {
+app.post("/api/follow_author", (req, response) => {
   console.log(req.body.author_id);
   jwt.verify(
     req.headers["authorization"],
@@ -53,7 +53,7 @@ app.post("/follow_author", (req, response) => {
   );
 });
 
-app.post("/unfollow_author", (req, response) => {
+app.post("/api/unfollow_author", (req, response) => {
   jwt.verify(
     req.headers["authorization"],
     process.env.SEC_KEY,
@@ -87,7 +87,7 @@ app.post("/unfollow_author", (req, response) => {
   );
 });
 
-app.get("/following", (req, res) => {
+app.get("/api/following", (req, res) => {
   jwt.verify(
     req.headers["authorization"],
     process.env.SEC_KEY,

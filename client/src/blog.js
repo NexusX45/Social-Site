@@ -24,7 +24,7 @@ export default function Blog({ id }) {
   //Initial Request....
   useEffect(() => {
     axios
-      .get(`/blog/${id}`)
+      .get(`/api/blog/${id}`)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -35,7 +35,7 @@ export default function Blog({ id }) {
         console.log(err);
       });
     axios
-      .get("/following", {
+      .get("/api/following", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
@@ -55,7 +55,7 @@ export default function Blog({ id }) {
     console.log(data.author_id);
     if (data.author_id)
       axios
-        .get("/author/" + data.author_id)
+        .get("/api/author/" + data.author_id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
@@ -74,7 +74,7 @@ export default function Blog({ id }) {
 
   useEffect(() => {
     axios
-      .get("/blog/" + id)
+      .get("/api/blog/" + id)
       .then((res) => {
         setLikes(res.data.likes);
       })
@@ -86,7 +86,7 @@ export default function Blog({ id }) {
   useEffect(() => {
     if (data.author_id)
       axios
-        .get("/author/" + data.author_id)
+        .get("/api/author/" + data.author_id)
         .then((res) => {
           console.log(res);
           setAuthor(res.data);
@@ -101,7 +101,7 @@ export default function Blog({ id }) {
   const handleFollowAuthor = () => {
     axios
       .post(
-        "/follow_author",
+        "/api/follow_author",
         {
           author_id: data.author_id,
         },
@@ -116,7 +116,7 @@ export default function Blog({ id }) {
   const handleUnfollowAuthor = () => {
     axios
       .post(
-        "/unfollow_author",
+        "/api/unfollow_author",
         {
           author_id: data.author_id,
         },
@@ -132,7 +132,7 @@ export default function Blog({ id }) {
     if (comment.current.value !== "") {
       axios
         .post(
-          "/blog/comment",
+          "/api/blog/comment",
           {
             id: id,
             author_id: author._id,
@@ -166,7 +166,7 @@ export default function Blog({ id }) {
     if (liked) {
       axios
         .post(
-          "/blog/unlike",
+          "/api/blog/unlike",
           {
             id: id,
           },
@@ -182,7 +182,7 @@ export default function Blog({ id }) {
     } else {
       axios
         .post(
-          "/blog/like",
+          "/api/blog/like",
           {
             id: id,
           },

@@ -12,7 +12,7 @@ export default function UpdateBlog(props) {
 
   useEffect(() => {
     axios
-      .get("/blog/" + props.match.params.id)
+      .get("/api/blog/" + props.match.params.id)
       .then((res) => {
         console.log(res);
         body.current.value = res.data.body;
@@ -25,7 +25,7 @@ export default function UpdateBlog(props) {
 
   const publish = () => {
     axios.post(
-      "/blog/update",
+      "/api/blog/update",
       {
         title: title.current.value,
         body: body.current.value,
@@ -38,7 +38,7 @@ export default function UpdateBlog(props) {
 
   const deletePost = () => {
     axios.post(
-      "/blog/delete",
+      "/api/blog/delete",
       {
         id: props.match.params.id,
       },
