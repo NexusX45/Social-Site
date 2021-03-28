@@ -1,4 +1,5 @@
 import { Switch, Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 import About from "./about";
 import Signup from "./signup";
 import Signin from "./signin";
@@ -12,7 +13,8 @@ import Author from "./author";
 import Myblogs from "./myblogs";
 import UpdateBlog from "./updateblog";
 
-export default function Routes({ user, setUser }) {
+export default function Routes({ setUser }) {
+  const user = useSelector((state) => state.user);
   return (
     <Switch>
       <Route exact path="/">
