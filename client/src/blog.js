@@ -143,7 +143,7 @@ export default function Blog({ id }) {
         )
         .then((res) => {
           axios
-            .get("/blog/" + id)
+            .get("/api/blog/" + id)
             .then((res) => {
               setComments(res.data.comments);
               document.getElementById("comment-input").value = "";

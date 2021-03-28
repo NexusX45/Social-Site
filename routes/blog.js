@@ -73,6 +73,7 @@ router.post("/myblogs", (req, res) => {
     (err, authData) => {
       if (err) {
         res.send(err);
+        console.log(err);
       } else {
         console.log(authData.userSign._id);
         Blog.find({ author_id: authData.userSign._id })

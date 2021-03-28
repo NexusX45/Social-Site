@@ -104,7 +104,7 @@ export default function Nav({ setUser }) {
             ""
           )}
         </div>
-        {user.loggedIn ? (
+        {user ? (
           <div className="nav-buttons d-flex justify-content-around">
             <a class="p-2 text-dark" href="/write">
               Write
