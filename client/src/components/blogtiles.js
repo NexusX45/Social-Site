@@ -14,6 +14,7 @@ const BlogTiles = (props) => {
       onClick={() => {
         handleBlog(props.id);
       }}
+      style={{ width: "100%" }}
     >
       <Card.Body className="d-flex my-2">
         <div className="mx-3">

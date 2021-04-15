@@ -26,7 +26,7 @@ export default function Write() {
 
   return (
     <div className="container">
-      <div class="h2 mt-3 mb-5">Write a blog</div>
+      <div class="h4 mt-3 mb-3">Write a blog</div>
       <Card className="blog-card">
         <Card.Body>
           <div className="my-3 d-flex">

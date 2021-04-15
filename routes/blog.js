@@ -2,13 +2,26 @@ const express = require("express");
 const Blog = require("../models/blog");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+
 router.get("/:id", (req, res) => {
+  console.log(req.body.author_id);
   Blog.findById(req.params.id)
     .then((blog) => {
       res.json(blog);
     })
     .catch((err) => {
       res.send(err);
+    });
+});
+
+router.get("/getByAuthorId/:author_id", (req, res) => {
+  Blog.find({ author_id: req.params.author_id })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
@@ -148,4 +161,5 @@ router.post("/delete", (req, res) => {
     }
   );
 });
+
 module.exports = router;

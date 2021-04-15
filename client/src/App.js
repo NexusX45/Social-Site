@@ -32,7 +32,7 @@ export default function App() {
       <Route>
         <div
           style={{
-            backgroundColor: "rgba(228, 243, 245, 0.6)",
+            backgroundColor: "#f5f5f5",
             minHeight: "1000px",
           }}
         >

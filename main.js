@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDatabase = require("./database");
 const User = require("./models/user");
+const Blog = require("./models/blog");
 const jwt = require("jsonwebtoken");
 const AuthorRoute = require("./routes/author");
 const BlogRoute = require("./routes/blog");
@@ -18,6 +19,16 @@ app.use("/api/user", UserRoute);
 app.use("/api/author", AuthorRoute);
 app.use("/api/blog", BlogRoute);
 
+app.get("/api/search/:q", (req, res) => {
+  User.find({ name: { $regex: req.params.q, $options: "i" } })
+    .select("name _id")
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 app.post("/api/follow_author", (req, response) => {
   console.log(req.body.author_id);
   jwt.verify(

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import BlogTiles from "./components/blogtiles";
 import { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 
@@ -9,6 +10,7 @@ export default function Author(props) {
   const [author, setAuthor] = useState("");
   const [authorFollowing, setAuthorFollowing] = useState([]);
   const [authorFollower, setAuthorFollower] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     axios
       .get("/api/author/" + props.match.params.id)
@@ -28,6 +30,14 @@ export default function Author(props) {
       .then((res) => {
         console.log(res.data);
         setFollowing(res.data);
+      });
+    axios
+      .get(`/api/blog/getByAuthorId/${props.match.params.id}`)
+      .then((res) => {
+        setBlogs(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [props]);
 
@@ -112,6 +122,11 @@ export default function Author(props) {
           )}
         </Card.Body>
       </Card>
+      <div className="h4">Blogs</div>
+
+      {blogs.map((item) => (
+        <BlogTiles title={item.title} body={item.body} id={item._id} />
+      ))}
     </div>
   );
 }

@@ -20,8 +20,14 @@
 }
 
 .nav-input {
-  width: 60%;
-  margin-right: 2.5%;
+  width: 40%;
+  right: 4%;
+}
+
+.navbar-custom {
+  // background-color: rgb(172, 227, 236);
+  background-color: white;
+  height: 75px;
 }
 
 .navbar-brand-small {
@@ -36,6 +42,7 @@
   .nav-input {
     width: 100%;
     margin: 0%;
+    right: 0px;
   }
   .navbar-brand-big {
     display: none;

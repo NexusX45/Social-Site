@@ -12,28 +12,33 @@ import Blog from "./blog";
 import Author from "./author";
 import Myblogs from "./myblogs";
 import UpdateBlog from "./updateblog";
+import Search from "./search";
 
 export default function Routes({ setUser }) {
   const user = useSelector((state) => state.user);
   return (
     <Switch>
       <Route exact path="/">
-        {user ? <Feed /> : <Home />}
+        {user.loggedIn ? <Feed /> : <Home />}
       </Route>
       <Route path="/about">
         <About />
       </Route>
       <Route path="/signin">
-        {user ? <Redirect to="/" /> : <Signin setUser={setUser} user={user} />}
+        {user.loggedIn ? (
+          <Redirect to="/" />
+        ) : (
+          <Signin setUser={setUser} user={user} />
+        )}
       </Route>
       <Route path="/signup">
-        {user ? <Redirect to="/" /> : <Signup setUser={setUser} />}
+        {user.loggedIn ? <Redirect to="/" /> : <Signup setUser={setUser} />}
       </Route>
       <Route path="/profile">
-        {user ? <Profile /> : <Signin setUser={setUser} user={user} />}
+        {user.loggedIn ? <Profile /> : <Signin setUser={setUser} user={user} />}
       </Route>
       <Route path="/write">
-        {user ? <Write /> : <Signin setUser={setUser} user={user} />}
+        {user.loggedIn ? <Write /> : <Signin setUser={setUser} user={user} />}
       </Route>
       <Route
         path="/blog/:id"
@@ -41,8 +46,9 @@ export default function Routes({ setUser }) {
       />
       <Route path="/author/:id" component={Author} />
       <Route path="/myblog">
-        {user ? <Myblogs /> : <Signin setUser={setUser} />}
+        {user.loggedIn ? <Myblogs /> : <Signin setUser={setUser} />}
       </Route>
+      <Route path="/search/:q" component={Search} />
       <Route path="/update/:id" component={UpdateBlog} />
     </Switch>
   );
