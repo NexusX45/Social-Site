@@ -134,6 +134,7 @@ router.post("/update", (req, res) => {
         Blog.findByIdAndUpdate(req.body.id, {
           title: req.body.title,
           body: req.body.body,
+          $push: { tags: req.body.tags },
         })
           .then((result) => {
             res.send(result);

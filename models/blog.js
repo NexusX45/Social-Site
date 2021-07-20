@@ -26,6 +26,7 @@ const blogSchema = mongoose.Schema({
     type: [{ author_id: String, body: String, author: String }],
   },
   likes: [String],
+  tags: [String],
 });
 
 module.exports = mongoose.model("Blog", blogSchema);

@@ -4,8 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
-import './css/feed.scss';
-
+import "./css/feed.scss";
 
 export default function Feed() {
   const [blogs, setBlogs] = useState([{ title: "", body: "", _id: "" }]);
@@ -53,8 +52,8 @@ export default function Feed() {
     <div>
       <div className="container my-2">
         <div className="d-flex my-3">
-          <div className="tag-section" style={{width:"200px"}}>
-            <div className="h4 mb-3">My Tags</div>
+          <div className="tag-section" style={{ width: "200px" }}>
+            <div className="h4 mb-3">Tags</div>
             <div className="tag-list">
               <div className="tag">#Coming Soon</div>
               {/* <div className="tag">#bruh</div>
@@ -62,10 +61,10 @@ export default function Feed() {
               <div className="tag">#bruh</div> */}
             </div>
           </div>
-          <div className="ml-3" style={{width:"70%"}}>
+          <div className="ml-3" style={{ width: "70%" }}>
             <span className="h4">Feed</span>
             {blogs.map((blog) => (
-              <BlogTiles title={blog.title} body={blog.body} id={blog._id}/>
+              <BlogTiles title={blog.title} body={blog.body} id={blog._id} />
             ))}
           </div>
         </div>

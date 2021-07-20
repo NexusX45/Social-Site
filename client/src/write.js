@@ -41,7 +41,7 @@ export default function Write() {
                 borderBottom: "solid 1px",
                 borderColor: "rgba(158, 158, 158, .6)",
               }}
-              placeholder="Title goes here..."
+              placeholder="Title"
               ref={title}
             ></input>
           </div>
@@ -49,7 +49,7 @@ export default function Write() {
             <textarea
               className="mx-3 lead"
               style={{
-                width: "80%",
+                width: "100%",
                 height: "500px",
                 border: "none",
                 outline: "none",
@@ -58,6 +58,21 @@ export default function Write() {
               ref={body}
               placeholder="Write your content here... (Markdown is supported)"
             ></textarea>
+          </div>
+          <div>
+            <input
+              placeholder="Mention tags"
+              style={{
+                width: "80%",
+                borderTop: "none",
+                borderLeft: "none",
+                borderRight: "none",
+                outline: "none",
+                borderBottom: "solid 1px",
+                borderColor: "rgba(158, 158, 158, .6)",
+                marginBottom: "5%",
+              }}
+            ></input>
           </div>
           <div className="d-flex">
             <button
