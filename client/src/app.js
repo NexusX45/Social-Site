@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Nav from "./nav";
 import Routes from "./routes";
 import axios from "axios";
-import "./App.css";
+import "./css/app.css";
 import { useDispatch } from "react-redux";
 import { LoginUser } from "./redux/actions";
 import { Route, BrowserRouter as Router } from "react-router-dom";
@@ -14,9 +14,8 @@ export default function App() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-        "token"
-      );
+      axios.defaults.headers.common["Authorization"] =
+        localStorage.getItem("token");
       axios
         .get("/api/user/profile")
         .then((res) => {

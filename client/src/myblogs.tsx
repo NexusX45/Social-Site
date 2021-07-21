@@ -1,26 +1,22 @@
 import React from "react";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogTiles from "./components/blogtiles";
+import { getMyBlogs } from "./services/service";
 
 export default function Myblogs() {
-  const [blogs, setBlogs] = useState([{title:"", body:"", _id:""}]);
+  const [blogs, setBlogs] = useState([{ title: "", body: "", _id: "" }]);
 
   useEffect(() => {
-    axios.post("/api/blog/myblogs", {}, {headers:{Authorization:localStorage.getItem('token')}}).then((res)=>{
-      console.log(res)
-      setBlogs(res.data)
-    })
+    getMyBlogs().then((blogs) => setBlogs(blogs));
   }, []);
 
   return (
     <div className="container">
       <div className="h2 my-3">My Blogs</div>
       <div>
-        {
-          blogs.map((blog)=>(<BlogTiles title={blog.title} body={blog.body} id={blog._id}/>))
-           
-          }
+        {blogs.map((blog) => (
+          <BlogTiles title={blog.title} body={blog.body} id={blog._id} />
+        ))}
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import "./css/feed.scss";
+import { getFeed } from "./services/service";
 
 export default function Feed() {
   const [blogs, setBlogs] = useState([{ title: "", body: "", _id: "" }]);
@@ -15,17 +15,9 @@ export default function Feed() {
   };
 
   useEffect(() => {
-    axios
-      .get("/api/user/feed", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        setBlogs(res.data);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getFeed().then((blogs) => {
+      setBlogs(blogs);
+    });
   }, []);
 
   const BlogTiles = (props: any) => {

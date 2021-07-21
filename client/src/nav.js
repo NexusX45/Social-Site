@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React from "react";
 import { useState } from "react";
 import "./css/nav.scss";
@@ -8,8 +7,6 @@ import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 export default function Nav({ setUser }) {
-  const [results, setResults] = useState([]);
-  const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
