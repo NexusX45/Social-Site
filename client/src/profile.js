@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
+import { getProfile } from "./services/service";
 
 export default function Profile() {
   const history = useHistory();
@@ -11,13 +11,9 @@ export default function Profile() {
     if (localStorage.length === 0) {
       history.push("/signin");
     } else {
-      axios
-        .get(`/api/user/profile`, {
-          headers: { Authorization: localStorage.getItem("token") },
-        })
-        .then((res) => {
-          console.log(res.data.user);
-          setUser(res.data.userSign);
+      getProfile()
+        .then((profile) => {
+          setUser(profile.userSign);
         })
         .catch((err) => {
           console.log(err);

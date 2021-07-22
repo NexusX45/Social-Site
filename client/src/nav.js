@@ -26,16 +26,10 @@ export default function Nav({ setUser }) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
-      <div
-        class="navbar-brand navbar-brand-small"
-        onClick={() => history.push("/")}
-      >
-        <h2
-          style={{ fontFamily: "Lobster", fontSize: "4rem" }}
-          className="mx-3 pr-3"
-        >
+      <div class="navbar-brand-small" onClick={() => history.push("/")}>
+        <span style={{ fontFamily: "Lobster", fontSize: "4rem" }} className="">
           Clarity
-        </h2>
+        </span>
       </div>
       <button
         class="navbar-toggler"
@@ -71,10 +65,9 @@ export default function Nav({ setUser }) {
         <form
           className="nav-input"
           onSubmit={() => history.push(`/search/${search}`)}
-          style={{ position: "relative" }}
         >
           <input
-            class="form-control form-control-dark"
+            class="form-control form-control-dark nav-search"
             type="text"
             placeholder="Search for users..."
             aria-label="Search"
@@ -83,7 +76,7 @@ export default function Nav({ setUser }) {
         </form>
 
         {user.loggedIn ? (
-          <div className="nav-buttons d-flex justify-content-around">
+          <div className="nav-buttons d-flex justify-content-between">
             <Button
               variant="outline-primary"
               onClick={() => history.push("/write")}

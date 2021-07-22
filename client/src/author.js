@@ -1,5 +1,10 @@
 import React from "react";
 import axios from "axios";
+import {
+  getAuthor,
+  getFollowing,
+  getBlogsByAuthorId,
+} from "./services/service";
 import BlogTiles from "./components/blogtiles";
 import { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
@@ -11,30 +16,37 @@ export default function Author(props) {
   const [authorFollowing, setAuthorFollowing] = useState([]);
   const [authorFollower, setAuthorFollower] = useState([]);
   const [blogs, setBlogs] = useState([]);
+
   useEffect(() => {
-    axios
-      .get("/api/author/" + props.match.params.id)
-      .then((res) => {
-        console.log(res.data);
-        setAuthor(res.data);
-        setAuthorFollowing(res.data.followed_authors_id);
-        setAuthorFollower(res.data.follower_authors_id);
+    if (author._id)
+      getAuthor(author._id)
+        .then((author) => {
+          setAuthor(author);
+          setAuthorFollowing(author.followed_authors_id);
+          setAuthorFollower(author.follower_authors_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, []);
+
+  useEffect(() => {
+    getAuthor(props.match.params.id)
+      .then((author) => {
+        setAuthor(author);
+        setAuthorFollowing(author.followed_authors_id);
+        setAuthorFollower(author.follower_authors_id);
       })
       .catch((err) => {
         console.log(err);
       });
-    axios
-      .get("/api/following/", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setFollowing(res.data);
-      });
-    axios
-      .get(`/api/blog/getByAuthorId/${props.match.params.id}`)
-      .then((res) => {
-        setBlogs(res.data);
+
+    getFollowing().then((following) => {
+      setFollowing(following);
+    });
+    getBlogsByAuthorId(props.match.params.id)
+      .then((blogs) => {
+        setBlogs(blogs);
       })
       .catch((err) => {
         console.log(err);
@@ -49,21 +61,6 @@ export default function Author(props) {
       setFollowed(false);
     }
   }, [following, props]);
-
-  useEffect(() => {
-    if (author._id)
-      axios
-        .get("/api/author/" + author._id)
-        .then((res) => {
-          console.log(res);
-          setAuthor(res.data);
-          setAuthorFollowing(res.data.followed_authors_id);
-          setAuthorFollower(res.data.follower_authors_id);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }, []);
 
   const handleFollowAuthor = () => {
     axios

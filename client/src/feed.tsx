@@ -53,7 +53,7 @@ export default function Feed() {
               <div className="tag">#bruh</div> */}
             </div>
           </div>
-          <div className="ml-3" style={{ width: "70%" }}>
+          <div className="feed-panel">
             <span className="h4">Feed</span>
             {blogs.map((blog) => (
               <BlogTiles title={blog.title} body={blog.body} id={blog._id} />
