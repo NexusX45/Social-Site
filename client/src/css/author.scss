@@ -1,0 +1,14 @@
+.author-card {
+  width: 30%;
+}
+
+.blogs {
+  width: 700px;
+}
+
+@media (max-width: 767px) {
+  .author-card {
+    width: 91%;
+    height: 100%;
+  }
+}

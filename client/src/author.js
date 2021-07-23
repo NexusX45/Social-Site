@@ -8,6 +8,7 @@ import {
 import BlogTiles from "./components/blogtiles";
 import { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
+import "./css/author.scss";
 
 export default function Author(props) {
   const [followed, setFollowed] = useState(false);
@@ -92,8 +93,8 @@ export default function Author(props) {
       });
   };
   return (
-    <div className="container">
-      <Card className="text-center my-3 mx-auto" style={{ width: "30em" }}>
+    <div className="">
+      <Card className="text-center my-3 mx-auto author-card">
         <Card.Body>
           <div className="h3 my-3">{author.name}</div>
           <div className="d-flex mb-3">
@@ -119,11 +120,13 @@ export default function Author(props) {
           )}
         </Card.Body>
       </Card>
-      <div className="h4">Blogs</div>
+      <div className="container">
+        <div className="h4">Blogs</div>
 
-      {blogs.map((item) => (
-        <BlogTiles title={item.title} body={item.body} id={item._id} />
-      ))}
+        {blogs.map((item) => (
+          <BlogTiles title={item.title} body={item.body} id={item._id} />
+        ))}
+      </div>
     </div>
   );
 }
