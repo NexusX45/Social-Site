@@ -5,6 +5,7 @@ import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
+import { getBlogById, getFollowing, getAuthor } from "./services/service";
 import "./css/blog.scss";
 
 export default function Blog({ id }) {
@@ -23,24 +24,18 @@ export default function Blog({ id }) {
 
   //Initial Request....
   useEffect(() => {
-    axios
-      .get(`/api/blog/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-        setComments(res.data.comments);
-        setLikes(res.data.likes);
+    getBlogById(id)
+      .then((blog) => {
+        setData(blog);
+        setComments(blog.comments);
+        setLikes(blog.likes);
       })
       .catch((err) => {
         console.log(err);
       });
-    axios
-      .get("/api/following", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        setFollowing(res.data);
-      });
+    getFollowing().then((res) => {
+      setFollowing(res);
+    });
   }, [id]);
 
   useEffect(() => {
@@ -54,13 +49,11 @@ export default function Blog({ id }) {
   useEffect(() => {
     console.log(data.author_id);
     if (data.author_id)
-      axios
-        .get("/api/author/" + data.author_id)
-        .then((res) => {
-          console.log(res);
-          setAuthor(res.data);
-          setAuthorFollowing(res.data.followed_authors_id);
-          setAuthorFollower(res.data.follower_authors_id);
+      getAuthor(data.author_id)
+        .then((author) => {
+          setAuthor(author);
+          setAuthorFollowing(author.followed_authors_id);
+          setAuthorFollower(author.follower_authors_id);
         })
         .catch((err) => {
           console.log(err);
@@ -73,10 +66,9 @@ export default function Blog({ id }) {
   }, [data, following]);
 
   useEffect(() => {
-    axios
-      .get("/api/blog/" + id)
-      .then((res) => {
-        setLikes(res.data.likes);
+    getBlogById(id)
+      .then((blog) => {
+        setLikes(blog.likes);
       })
       .catch((err) => {
         console.log(err);
@@ -85,13 +77,11 @@ export default function Blog({ id }) {
 
   useEffect(() => {
     if (data.author_id)
-      axios
-        .get("/api/author/" + data.author_id)
-        .then((res) => {
-          console.log(res);
-          setAuthor(res.data);
-          setAuthorFollowing(res.data.followed_authors_id);
-          setAuthorFollower(res.data.follower_authors_id);
+      getAuthor(data.author_id)
+        .then((author) => {
+          setAuthor(author);
+          setAuthorFollowing(author.followed_authors_id);
+          setAuthorFollower(author.follower_authors_id);
         })
         .catch((err) => {
           console.log(err);
@@ -282,7 +272,7 @@ export default function Blog({ id }) {
             </div>
           </Card.Body>
         </Card>
-        <Card className="mx-auto author-card" style={{ height: "300px" }}>
+        <Card className="mx-auto author-info-card" style={{ height: "300px" }}>
           <Card.Body style={{ padding: "10px" }}>
             <Card.Title className="text-center">{author.name}</Card.Title>
             <Card.Text>
