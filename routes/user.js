@@ -51,7 +51,7 @@ router.get("/feed", (req, res) => {
     process.env.SEC_KEY,
     (err, authData) => {
       if (err) {
-        res.send(err);
+        res.status(500).send(err);
       } else {
         User.findById(authData.userSign._id)
           .then((result) => {

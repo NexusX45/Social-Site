@@ -15,11 +15,16 @@ export default function Feed() {
   };
 
   useEffect(() => {
-    getFeed().then((blogs) => {
-      setBlogs(blogs);
-    });
+    getFeed()
+      .then((blogs) => {
+        setBlogs(blogs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
+  console.log(blogs);
   const BlogTiles = (props: any) => {
     return (
       <Card

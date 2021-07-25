@@ -3,6 +3,11 @@ const Blog = require("../models/blog");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
+const VerifyToken = async (token) => {
+  const auth = await jwt.verify(token, process.env.APP_SECRET);
+  return auth;
+};
+
 router.get("/:id", (req, res) => {
   console.log(req.body.author_id);
   Blog.findById(req.params.id)
@@ -85,7 +90,7 @@ router.post("/myblogs", (req, res) => {
     process.env.SEC_KEY,
     (err, authData) => {
       if (err) {
-        res.send(err);
+        res.status(500).send(err);
         console.log(err);
       } else {
         console.log(authData.userSign._id);

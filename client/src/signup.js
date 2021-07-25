@@ -25,6 +25,7 @@ export default function Signup({ setUser }) {
           .then((res) => {
             console.log(res);
             setUser(res.data.user);
+            window.location.href = "/";
           })
           .catch((err) => {
             console.log(err);
